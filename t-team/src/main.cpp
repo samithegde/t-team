@@ -91,13 +91,16 @@ void opcontrol() {
         int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
         int left = frontback + turn;
         int right = frontback - turn;
+        int left_speed = forward + turn;
+    	int right_speed = forward - turn;
+
         leftDrive.move(left);
         rightDrive.move(right);
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
-        {
+        /*if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
+        { 
             leftDrive.move(300);
             rightDrive.move(-300);
-        }
+        }*/
         pros::delay(15);
     }
 }

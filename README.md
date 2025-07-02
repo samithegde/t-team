@@ -1,1 +1,1 @@
-add info later
+82855t talos

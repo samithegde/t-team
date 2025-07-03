@@ -1,8 +1,10 @@
 #include "main.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup leftDrive({1, 2, 3});
-pros::MotorGroup rightDrive({-4, -5, -6});
+//pros::MotorGroup leftDrive({1, 2, 3});
+//pros::MotorGroup rightDrive({-4, -5, -6});
+pros::MotorGroup leftDrive({1});
+pros::MotorGroup rightDrive({-11});
 
 /**
  * A callback function for LLEMU's center button.
@@ -28,7 +30,7 @@ void on_center_button() {
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "evan wang is #1 brat na!");
 
 	pros::lcd::register_btn1_cb(on_center_button);
 }
@@ -62,21 +64,14 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+    leftDrive.move(100);
+    rightDrive.move(100);
+    pros::delay(2000);
+    leftDrive.move(0);
+    rightDrive.move(0);
+}
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
 void opcontrol() {
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -87,20 +82,25 @@ void opcontrol() {
         {
             autonomous();
         }
-        int frontback = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
-        int left = frontback + turn;
-        int right = frontback - turn;
-        int left_speed = forward + turn;
-    	int right_speed = forward - turn;
+        int vertical = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Y axis of the left joystick
+        int horizontal = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X); // X axis of the right joystick
+        int leftSpeed = vertical + horizontal; // Calculate left motor speed 
+        int rightSpeed = vertical - horizontal; // Calculate right motor speed
 
-        leftDrive.move(left);
-        rightDrive.move(right);
-        /*if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP))
-        { 
+        /*int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
+        int forward = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) ? 127 : 0;
+        int backward = controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2) ? -127 : 0;
+        int drive = forward + backward;
+        int leftSpeed = drive + turn;
+        int rightSpeed = drive - turn;*/
+
+        leftDrive.move(leftSpeed);
+        rightDrive.move(rightSpeed);
+
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
             leftDrive.move(300);
             rightDrive.move(-300);
-        }*/
+        }
         pros::delay(15);
     }
 }

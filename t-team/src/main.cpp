@@ -1,10 +1,10 @@
 #include "main.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-//pros::MotorGroup leftDrive({1, 2, 3});
-//pros::MotorGroup rightDrive({-4, -5, -6});
-pros::MotorGroup leftDrive({1});
-pros::MotorGroup rightDrive({-11});
+pros::MotorGroup leftDrive({1, 2, 3});
+pros::MotorGroup rightDrive({-4, -5, -6});
+//pros::MotorGroup leftDrive({1});
+//pros::MotorGroup rightDrive({-11});
 
 /**
  * A callback function for LLEMU's center button.

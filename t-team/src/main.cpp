@@ -1,8 +1,8 @@
 #include "main.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup leftDrive({1, 2, 3});
-pros::MotorGroup rightDrive({-4, -5, -6});
+pros::MotorGroup leftDrive({11, 12, -13});
+pros::MotorGroup rightDrive({18, -19, -20});
 //pros::MotorGroup leftDrive({1});
 //pros::MotorGroup rightDrive({-11});
 
@@ -84,8 +84,8 @@ void opcontrol() {
         }
         int vertical = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Y axis of the left joystick
         int horizontal = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X); // X axis of the right joystick
-        int leftSpeed = vertical + horizontal; // Calculate left motor speed 
-        int rightSpeed = vertical - horizontal; // Calculate right motor speed
+        int leftSpeed = vertical - horizontal; // Calculate left motor speed 
+        int rightSpeed = vertical + horizontal; // Calculate right motor speed
 
         /*int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         int forward = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) ? 127 : 0;

@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "evan wnag is #1 brat na",
+    "project_name": "balls",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -592,7 +592,7 @@
       }
     },
     "upload_options": {
-      "slot": 1,
+      "slot": 3,
       "icon": "X"
     },
     "use_early_access": false

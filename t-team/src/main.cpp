@@ -1,10 +1,10 @@
 #include "main.h"
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
-pros::MotorGroup leftDrive({11, 12, -13});
-pros::MotorGroup rightDrive({18, -19, -20});
-//pros::MotorGroup leftDrive({1});
-//pros::MotorGroup rightDrive({-11});
+pros::MotorGroup leftDrive({-3, -10, 11});
+pros::MotorGroup rightDrive({-1, 2, 20});
+pros::Motor intake(9);
+/*pros::ADIDigitalOut tongue('A');*/
 
 /**
  * A callback function for LLEMU's center button.
@@ -84,8 +84,8 @@ void opcontrol() {
         }
         int vertical = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Y axis of the left joystick
         int horizontal = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X); // X axis of the right joystick
-        int leftSpeed = vertical - horizontal; // Calculate left motor speed 
-        int rightSpeed = vertical + horizontal; // Calculate right motor speed
+        int leftSpeed = vertical + horizontal; // Calculate left motor speed 
+        int rightSpeed = vertical - horizontal; // Calculate right motor speed
 
         /*int turn = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_X);
         int forward = controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2) ? 127 : 0;
@@ -97,10 +97,13 @@ void opcontrol() {
         leftDrive.move(leftSpeed);
         rightDrive.move(rightSpeed);
 
-        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)) {
-            leftDrive.move(300);
-            rightDrive.move(-300);
+        if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+            intake.move_velocity(350);
         }
+        else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
+            intake.move_velocity(-350);
+        }
+
         pros::delay(15);
     }
 }

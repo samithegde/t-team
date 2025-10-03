@@ -70,12 +70,6 @@ void opcontrol(void);
 }
 #endif
 
-extern pros::Controller controller;
-extern pros::MotorGroup leftDrive;
-extern pros::MotorGroup rightDrive;
-extern int forward;
-extern int turn;
-
 #ifdef __cplusplus
 /**
  * You can add C++-only headers here

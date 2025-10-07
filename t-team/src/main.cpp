@@ -3,7 +3,9 @@
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 pros::MotorGroup leftDrive({11, 12, -13});
 pros::MotorGroup rightDrive({18, -19, -20});
-pros::MotorGroup x({-1, -10});
+pros::MotorGroup intake({-1, -10});
+pros::ADIDigitalOut colorSort({'A'});
+
 //pros::MotorGroup leftDrive({1});
 //pros::MotorGroup rightDrive({-11});
 
@@ -79,14 +81,15 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);  // Prints status of the emulated screen LCDs
 
-        bool x_spinning = false;
         if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_R1))
         {
-            x_spinning = !x_spinning;
-            if(x_spinning) x.move(300);
-
-            //autonomous();
+            intake.move(300);
         }
+
+        if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_A)) {
+            
+        }
+
         int vertical = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y); // Y axis of the left joystick
         int horizontal = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X); // X axis of the right joystick
         int leftSpeed = vertical - horizontal; // Calculate left motor speed 
